@@ -12,6 +12,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import googleIcon from "../../../assets/google-icon.png";
 import githubIcon from "../../../assets/github-icon-branco.png";
 import facebookIcon from "../../../assets/face-icon-azul.png";
+import { useDispatch } from "react-redux";
+import { setLogin } from "../../store/slices/loginSlice";
 
 const optionsLogin = [
   {
@@ -32,6 +34,12 @@ const optionsLogin = [
 ];
 
 export default function LoginPage() {
+    const dispatch = useDispatch();
+
+    function handleLogin() {
+        dispatch(setLogin(true));
+    }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.containerLogo}>
@@ -55,7 +63,9 @@ export default function LoginPage() {
               </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity activeOpacity={0.7}>
+          <TouchableOpacity activeOpacity={0.7} 
+            onPress={handleLogin}
+          >
             <LinearGradient
               colors={["#6b6dd8", "#841FDC"]}
               start={{ x: 0, y: 0 }}
