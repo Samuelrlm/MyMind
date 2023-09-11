@@ -14,6 +14,8 @@ import githubIcon from "../../../assets/github-icon-branco.png";
 import facebookIcon from "../../../assets/face-icon-azul.png";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../store/slices/loginSlice";
+import { useNavigation } from "@react-navigation/native";
+import { Button } from "../../components/Button";
 
 const optionsLogin = [
   {
@@ -34,11 +36,12 @@ const optionsLogin = [
 ];
 
 export default function LoginPage() {
-    const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
-    function handleLogin() {
-        dispatch(setLogin(true));
-    }
+  function handleLogin() {
+    dispatch(setLogin(true));
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -63,18 +66,9 @@ export default function LoginPage() {
               </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity activeOpacity={0.7} 
-            onPress={handleLogin}
-          >
-            <LinearGradient
-              colors={["#6b6dd8", "#841FDC"]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={styles.btnLogin}
-            >
-              <Text style={styles.loginName}>Entrar</Text>
-            </LinearGradient>
-          </TouchableOpacity>
+          <View style={{ width: "100%", marginTop: 10 }}>
+            <Button variant="primary" title="Entrar" onPress={handleLogin} />
+          </View>
         </View>
         <View style={styles.blankLine}>
           <View style={styles.line} />
@@ -115,16 +109,41 @@ export default function LoginPage() {
                     source={item.icon}
                   />
                 </View>
-                <View style={{ width: "100%", height: "100%", position: "absolute", alignItems:"center", justifyContent: "center" }}>
-                    <Text style={{ color: "#fff", fontSize: 15 }}> Entrar com <Text style={{
+                <View
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    position: "absolute",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text style={{ color: "#fff", fontSize: 15 }}>
+                    {" "}
+                    Entrar com{" "}
+                    <Text
+                      style={{
                         fontWeight: "bold",
-                    }}>
-                    {item.name}</Text></Text>
-
+                      }}
+                    >
+                      {item.name}
+                    </Text>
+                  </Text>
                 </View>
               </View>
             </TouchableOpacity>
           ))}
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => navigation.navigate("SignUp")}
+            style={{
+              flexDirection: "row",
+              paddingLeft: 10,
+              marginTop: 5,
+            }}
+          >
+            <Text style={styles.labelSignUp}>Não tem uma conta? Cadastre-se</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
@@ -141,13 +160,13 @@ const styles = StyleSheet.create({
   },
   containerLogo: {
     width: "100%",
-    height: "40%",
+    height: "35%",
     alignItems: "center",
     justifyContent: "center",
   },
   containerContent: {
     width: "100%",
-    height: "60%",
+    height: "65%",
     alignItems: "center",
   },
   loginName: {
@@ -184,6 +203,11 @@ const styles = StyleSheet.create({
     marginRight: 5,
     marginTop: 5,
   },
+  labelSignUp: {
+    color: "#2D7DFF",
+    fontSize: 17,
+    marginTop: 5,
+  },
   blankLine: {
     width: "90%",
     flexDirection: "row",
@@ -196,14 +220,6 @@ const styles = StyleSheet.create({
     width: "40%",
     height: 1,
     backgroundColor: "#5A5A5A",
-  },
-  btnLogin: {
-    width: "100%",
-    height: 40,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 10,
   },
   cardOptions: {
     width: "90%",
