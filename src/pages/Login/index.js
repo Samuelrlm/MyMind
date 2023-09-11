@@ -16,6 +16,8 @@ import { useDispatch } from "react-redux";
 import { setLogin } from "../../store/slices/loginSlice";
 import { useNavigation } from "@react-navigation/native";
 import { Button } from "../../components/Button";
+import mailIcon from "../../../assets/icons/email.png";
+import keyIcon from "../../../assets/icons/key.png";
 
 const optionsLogin = [
   {
@@ -54,13 +56,13 @@ export default function LoginPage() {
       <View style={styles.containerContent}>
         <View style={styles.cardLogin}>
           <View style={styles.loginInfos}>
-            <CustomTextInput placeholder="E-mail" />
+            <CustomTextInput placeholder="E-mail" iconImage={mailIcon} />
             <View
               style={{
                 alignItems: "flex-end",
               }}
             >
-              <CustomTextInput placeholder="Senha" />
+              <CustomTextInput placeholder="Senha" iconImage={keyIcon} type="password" />
               <TouchableOpacity style={styles.btnPass}>
                 <Text style={styles.labelLink}>Esqueceu sua senha?</Text>
               </TouchableOpacity>
@@ -184,7 +186,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#242424",
     borderRadius: 20,
     paddingHorizontal: 10,
-    paddingVertical: 15,
+    paddingVertical: 14,
   },
   loginInfos: {
     width: "100%",
