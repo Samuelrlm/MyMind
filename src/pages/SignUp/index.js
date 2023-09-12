@@ -12,6 +12,7 @@ import { Button } from "../../components/Button";
 import CheckBox from "../../components/CheckBox";
 import CustomTextInput from "../../components/CustomTextInput";
 import { FontAwesome5 } from '@expo/vector-icons';
+import { login } from "../../services/session/login";
 
 const inputsList = [
   {

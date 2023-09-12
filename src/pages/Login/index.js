@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import {
   Image,
   SafeAreaView,
@@ -15,7 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Button } from "../../components/Button";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
-import loginAuth from "../../services/session/login";
+import { login } from "../../services/session/login";
 
 const optionsLogin = [
   {
@@ -37,16 +37,13 @@ const optionsLogin = [
 
 export default function LoginPage() {
   const navigation = useNavigation();
-  const [inputValues, setInputValues] = React.useState({
+  const [inputValues, setInputValues] = useState({
     email: "",
     password: "",
   });
 
   function handleLogin() {
-    loginAuth({
-      email: inputValues.email,
-      password: inputValues.password,
-    });
+    
   }
 
   return (

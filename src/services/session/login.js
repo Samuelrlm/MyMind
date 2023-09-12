@@ -1,40 +1,24 @@
-import { URL } from "../api";
+import { api } from "../api";
 
-export default function loginAuth({ email, password }) {
-    const myHeaders = new Headers();
-   
-    try {
-      const requestBody = JSON.stringify({
-            email: email,
-            password: password,
-      });
+export async function login(email, password) {
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
 
-      const requestOptions = {
-         method: "POST",
-            headers: myHeaders,
-         body: requestBody,
-      };
+  var raw = JSON.stringify({
+    email: `${email}`,
+    password: `${password}`,
+  });
 
-      return new Promise(async (resolve, reject) => {
-         await fetch(
-            `http://localhost:3030/login`,
-            requestOptions
-         )
-            .then(async (response) => {
-               const resp = await response.json();
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
 
-               console.log(resp);
-
-               if (Boolean(resp?.error)) {
-                  reject(resp?.error);
-               }
-               resolve(resp);
-            })
-            .catch((error) => {
-               reject(error);
-            });
-      });
-   } catch (err) {
-      throw err;
-   }
+  
+    const response = await fetch(`${api}/login`, requestOptions);
+    const data = await response.json();
+    
+    return data;
 }
