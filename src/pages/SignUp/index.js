@@ -7,27 +7,24 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import arrowLeft from "../../../assets/icons/left.png";
 import { useNavigation } from "@react-navigation/native";
 import { Button } from "../../components/Button";
 import CheckBox from "../../components/CheckBox";
 import CustomTextInput from "../../components/CustomTextInput";
-import userIcon from "../../../assets/icons/user-solid.png";
-import emailIcon from "../../../assets/icons/email-solid.png";
-import keyIcon from "../../../assets/icons/key.png";
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const inputsList = [
   {
     name: "Nome",
     placeholder: "Nome",
     type: "text",
-    icon: userIcon,
+    icon: <FontAwesome5 name="user" size={20} color="#A0A0A0" />,
   },
   {
     name: "E-mail",
     placeholder: "E-mail",
     type: "email",
-    icon: emailIcon,
+    icon: <FontAwesome5 name="envelope" size={20} color="#A0A0A0" />,
   },
   {
     name: "Telefone",
@@ -38,7 +35,7 @@ const inputsList = [
     name: "Senha",
     placeholder: "Senha",
     type: "password",
-    icon: keyIcon,
+    icon: <FontAwesome5 name="key" size={20} color="#A0A0A0" />,
   },
 ];
 
@@ -65,7 +62,7 @@ export function SignUpPage() {
           activeOpacity={0.7}
           style={styles.containerIcon}
         >
-          <Image source={arrowLeft} style={styles.arrowLeft} />
+          <FontAwesome5 name="arrow-left" size={27} color="#ffffff" />
         </TouchableOpacity>
       </View>
       <View style={styles.containerContent}>
@@ -74,7 +71,7 @@ export function SignUpPage() {
             <View key={index} style={styles.containerInput}>
               <Text style={styles.textInput}>{input.name}</Text>
               <CustomTextInput
-                iconImage={input.icon}
+                icon={input.icon}
                 placeholder={input.placeholder}
                 customHeight={50}
                 type={input.type}

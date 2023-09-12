@@ -5,7 +5,9 @@ import { AuthStack } from "./AuthStack";
 import { useSelector } from "react-redux";
 
 export function Router() {
-    const auth = useSelector((state) => state.login.login);
+    const auth = useSelector((state) => state.login.user);
+
+    //{auth.token !== "" ? <AppStack /> : <AuthStack />}
 
   return (
     <NavigationContainer>

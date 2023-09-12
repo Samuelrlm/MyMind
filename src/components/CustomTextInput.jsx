@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import {StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { Ionicons } from '@expo/vector-icons';
 
 export default function CustomTextInput({
   placeholder,
@@ -7,7 +8,7 @@ export default function CustomTextInput({
   customHeight = 40,
   type = "default",
   onChange,
-  iconImage,
+  icon,
 }) {
   function getKeyboardType(type) {
     switch (type) {
@@ -28,24 +29,18 @@ export default function CustomTextInput({
     <View style={styles.container}>
       {type === "password" && (
         <View style={[styles.textInput, { flexDirection: "row", backgroundColor: bgColor, height: customHeight }]}>
-        {iconImage && (
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <Image
-              source={iconImage}
-              style={{
-                width: 20,
-                height: 20,
-                resizeMode: "contain",
-                marginRight: 10,
-              }}
-            />
+        {icon && (
+          <View style={{ justifyContent: "center", alignItems: "center", marginRight: 10 }}>
+            {icon}
           </View>
         )}
         <TextInput
-          style={{ width: "84%" }}
+          style={icon ? { width: "84%", color: "#ffffff" } : { width: "90%", color: "#ffffff"}}
           placeholder={placeholder}
           placeholderTextColor="#A0A0A0"
-          secureTextEntry={true}
+          secureTextEntry={
+            showPassword ? false : true
+          }
           keyboardType={getKeyboardType(type)}
           onChangeText={onChange}
         />
@@ -59,23 +54,13 @@ export default function CustomTextInput({
           }}
         >
           {showPassword ? (
-            <Image
-              source={require("../../assets/icons/eye-off-solid.png")}
-              style={{
-                width: 20,
-                height: 20,
-                resizeMode: "contain",
-              }}
-            />
+            <View style={{ justifyContent: "center", alignItems: "center", marginRight: 10 }}>
+              <Ionicons name="eye-off" size={20} color="#A0A0A0" />
+            </View>
           ) : (
-            <Image
-              source={require("../../assets/icons/eye-solid.png")}
-              style={{
-                width: 20,
-                height: 20,
-                resizeMode: "contain",
-              }}
-            />
+            <View style={{ justifyContent: "center", alignItems: "center", marginRight: 10}}>
+              <Ionicons name="eye" size={20} color="#A0A0A0" />
+          </View>
           )}
           </TouchableOpacity>
       </View>
@@ -88,21 +73,13 @@ export default function CustomTextInput({
       )}
       {type !== "password" && type !== "phone" && (
         <View style={[styles.textInput, { flexDirection: "row", backgroundColor: bgColor, height: customHeight }]}>
-          {iconImage && (
-            <View style={{ justifyContent: "center", alignItems: "center" }}>
-              <Image
-                source={iconImage}
-                style={{
-                  width: 20,
-                  height: 20,
-                  resizeMode: "contain",
-                  marginRight: 10,
-                }}
-              />
-            </View>
+          {icon && (
+            <View style={{ justifyContent: "center", alignItems: "center", marginRight: 10 }}>
+            {icon}
+          </View>
           )}
           <TextInput
-            style={iconImage ? { width: "90%" } : { width: "100%" }}
+            style={icon ? { width: "90%", color: "#ffffff" } : { width: "100%", color: "#ffffff" }}
             placeholder={placeholder}
             placeholderTextColor="#A0A0A0"
             keyboardType={getKeyboardType(type)}

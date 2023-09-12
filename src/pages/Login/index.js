@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Image,
   SafeAreaView,
@@ -8,16 +8,14 @@ import {
   View,
 } from "react-native";
 import CustomTextInput from "../../components/CustomTextInput";
-import { LinearGradient } from "expo-linear-gradient";
 import googleIcon from "../../../assets/google-icon.png";
 import githubIcon from "../../../assets/github-icon-branco.png";
 import facebookIcon from "../../../assets/face-icon-azul.png";
-import { useDispatch } from "react-redux";
-import { setLogin } from "../../store/slices/loginSlice";
 import { useNavigation } from "@react-navigation/native";
 import { Button } from "../../components/Button";
-import mailIcon from "../../../assets/icons/email.png";
-import keyIcon from "../../../assets/icons/key.png";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
+import loginAuth from "../../services/session/login";
 
 const optionsLogin = [
   {
@@ -39,10 +37,16 @@ const optionsLogin = [
 
 export default function LoginPage() {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
+  const [inputValues, setInputValues] = React.useState({
+    email: "",
+    password: "",
+  });
 
   function handleLogin() {
-    dispatch(setLogin(true));
+    loginAuth({
+      email: inputValues.email,
+      password: inputValues.password,
+    });
   }
 
   return (
@@ -56,20 +60,35 @@ export default function LoginPage() {
       <View style={styles.containerContent}>
         <View style={styles.cardLogin}>
           <View style={styles.loginInfos}>
-            <CustomTextInput placeholder="E-mail" iconImage={mailIcon} />
+            <CustomTextInput
+              placeholder="E-mail"
+              icon={<Entypo name="mail" size={20} color="#A0A0A0" />}
+              onChange={(value) =>
+                setInputValues({ ...inputValues, email: value })
+              }
+            />
             <View
               style={{
                 alignItems: "flex-end",
               }}
             >
-              <CustomTextInput placeholder="Senha" iconImage={keyIcon} type="password" />
+              <CustomTextInput
+                onChange={(value) =>
+                  setInputValues({ ...inputValues, password: value })
+                }
+                placeholder="Senha"
+                type="password"
+                icon={<FontAwesome5 name="key" size={20} color="#A0A0A0" />}
+              />
               <TouchableOpacity style={styles.btnPass}>
                 <Text style={styles.labelLink}>Esqueceu sua senha?</Text>
               </TouchableOpacity>
             </View>
           </View>
           <View style={{ width: "100%", marginTop: 10 }}>
-            <Button variant="primary" title="Entrar" onPress={handleLogin} />
+            <Button variant="primary" title="Entrar" onPress={
+              handleLogin
+            } />
           </View>
         </View>
         <View style={styles.blankLine}>
@@ -144,7 +163,9 @@ export default function LoginPage() {
               marginTop: 5,
             }}
           >
-            <Text style={styles.labelSignUp}>Não tem uma conta? Cadastre-se</Text>
+            <Text style={styles.labelSignUp}>
+              Não tem uma conta? Cadastre-se
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
