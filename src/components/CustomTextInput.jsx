@@ -1,6 +1,14 @@
 import React, { useState } from "react";
-import {StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
-import { Ionicons } from '@expo/vector-icons';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import flag from "../../assets/brazilFlag.png";
 
 export default function CustomTextInput({
   placeholder,
@@ -28,58 +36,133 @@ export default function CustomTextInput({
   return (
     <View style={styles.container}>
       {type === "password" && (
-        <View style={[styles.textInput, { flexDirection: "row", backgroundColor: bgColor, height: customHeight }]}>
-        {icon && (
-          <View style={{ justifyContent: "center", alignItems: "center", marginRight: 10 }}>
-            {icon}
-          </View>
-        )}
-        <TextInput
-          style={icon ? { width: "84%", color: "#ffffff" } : { width: "90%", color: "#ffffff"}}
-          placeholder={placeholder}
-          placeholderTextColor="#A0A0A0"
-          secureTextEntry={
-            showPassword ? false : true
-          }
-          keyboardType={getKeyboardType(type)}
-          onChangeText={onChange}
-        />
-        <TouchableOpacity
-          onPress={() => {
-            setShowPassword(!showPassword);
-          }}
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+        <View
+          style={[
+            styles.textInput,
+            {
+              flexDirection: "row",
+              backgroundColor: bgColor,
+              height: customHeight,
+            },
+          ]}
         >
-          {showPassword ? (
-            <View style={{ justifyContent: "center", alignItems: "center", marginRight: 10 }}>
-              <Ionicons name="eye-off" size={20} color="#A0A0A0" />
+          {icon && (
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                marginRight: 10,
+              }}
+            >
+              {icon}
             </View>
-          ) : (
-            <View style={{ justifyContent: "center", alignItems: "center", marginRight: 10}}>
-              <Ionicons name="eye" size={20} color="#A0A0A0" />
-          </View>
           )}
+          <TextInput
+            style={
+              icon
+                ? { width: "84%", color: "#ffffff" }
+                : { width: "90%", color: "#ffffff" }
+            }
+            placeholder={placeholder}
+            placeholderTextColor="#A0A0A0"
+            secureTextEntry={showPassword ? false : true}
+            keyboardType={getKeyboardType(type)}
+            onChangeText={onChange}
+          />
+          <TouchableOpacity
+            onPress={() => {
+              setShowPassword(!showPassword);
+            }}
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {showPassword ? (
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginRight: 10,
+                }}
+              >
+                <Ionicons name="eye-off" size={20} color="#A0A0A0" />
+              </View>
+            ) : (
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginRight: 10,
+                }}
+              >
+                <Ionicons name="eye" size={20} color="#A0A0A0" />
+              </View>
+            )}
           </TouchableOpacity>
-      </View>
-        
+        </View>
       )}
       {type === "phone" && (
         <View style={{ flexDirection: "row", justifyContent: "center" }}>
-          <View></View>
+          <View style={[styles.containerFlag, { height: customHeight, backgroundColor: "transparent" }]}>
+            <Image
+              source={flag}
+              style={{
+                width: 30,
+                height: 20,
+                resizeMode: "contain",
+              }}
+            />
+          </View>
+          <View
+            style={[
+              styles.textInput,
+              { backgroundColor: bgColor, height: customHeight, width: "85%" },
+            ]}
+          >
+            <View style={[styles.preFix, {height: customHeight}]}>
+              <Text style={{color: "#A0A0A0", marginLeft: 20, marginRight: 5}}>
+                +55
+              </Text>
+              <TextInput
+                style={{ width: "100%", color: "#ffffff" }}
+                placeholder={placeholder}
+                placeholderTextColor="#A0A0A0"
+                keyboardType={getKeyboardType(type)}
+                onChangeText={onChange}
+              />
+            </View>
+          </View>
         </View>
       )}
       {type !== "password" && type !== "phone" && (
-        <View style={[styles.textInput, { flexDirection: "row", backgroundColor: bgColor, height: customHeight }]}>
+        <View
+          style={[
+            styles.textInput,
+            {
+              flexDirection: "row",
+              backgroundColor: bgColor,
+              height: customHeight,
+            },
+          ]}
+        >
           {icon && (
-            <View style={{ justifyContent: "center", alignItems: "center", marginRight: 10 }}>
-            {icon}
-          </View>
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                marginRight: 10,
+              }}
+            >
+              {icon}
+            </View>
           )}
           <TextInput
-            style={icon ? { width: "90%", color: "#ffffff" } : { width: "100%", color: "#ffffff" }}
+            style={
+              icon
+                ? { width: "90%", color: "#ffffff" }
+                : { width: "100%", color: "#ffffff" }
+            }
             placeholder={placeholder}
             placeholderTextColor="#A0A0A0"
             keyboardType={getKeyboardType(type)}
@@ -100,5 +183,19 @@ const styles = StyleSheet.create({
     color: "#fff",
     paddingHorizontal: 10,
     width: "100%",
+  },
+  preFix: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+  },
+  containerFlag: {
+    width: "15%",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
   },
 });

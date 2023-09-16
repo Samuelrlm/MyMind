@@ -16,6 +16,10 @@ import { Button } from "../../components/Button";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { login } from "../../services/session/login";
+import Toast from "react-native-toast-message";
+import { useDispatch } from "react-redux";
+import { setLogin } from "../../store/slices/loginSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const optionsLogin = [
   {
@@ -36,15 +40,56 @@ const optionsLogin = [
 ];
 
 export default function LoginPage() {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [inputValues, setInputValues] = useState({
     email: "",
     password: "",
   });
 
-  function handleLogin() {
+  async function handleLogin() {
+    const lowerCaseEmail = inputValues.email.toLowerCase();
+
+    if (inputValues.email === "" || inputValues.password === "") {
+      Toast.show({
+        type: "error",
+        text1: "Erro",
+        text2: "Preencha todos os campos",
+        position: "top",
+        visibilityTime: 4000,
+        autoHide: true,
+        bottomOffset: 40,
+      });
+    } else if (inputValues.password.length < 6) {
+      Toast.show({
+        type: "error",
+        text1: "Erro",
+        text2: "A senha deve conter no mínimo 6 caracteres",
+        position: "top",
+        visibilityTime: 4000,
+        autoHide: true,
+        bottomOffset: 40,
+      });
+    }
+    else {
+        const response = await login(lowerCaseEmail, inputValues.password);
+
+        if(response.user !== undefined) {
+
+          const userData = {
+            name: response.user.name,
+            email: response.user.email,
+            token: response.user.token,
+            id: response.user.id,
+          }
+
+          dispatch(setLogin(userData));
+          await AsyncStorage.setItem("@user", JSON.stringify(userData));
+        } 
+    }
+    }
+
     
-  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -83,9 +128,7 @@ export default function LoginPage() {
             </View>
           </View>
           <View style={{ width: "100%", marginTop: 10 }}>
-            <Button variant="primary" title="Entrar" onPress={
-              handleLogin
-            } />
+            <Button variant="primary" title="Entrar" onPress={handleLogin} />
           </View>
         </View>
         <View style={styles.blankLine}>

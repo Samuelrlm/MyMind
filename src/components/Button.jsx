@@ -28,7 +28,7 @@ export function Button({ variant = "primary", title, onPress }) {
       onPress={onPress}
     >
       <LinearGradient
-        //colors={["#9C3FE4", "#B14B96", "#C65647"]}
+        // colors={["#9C3FE4", "#B14B96", "#C65647"]}
         colors={["#6b6dd8", "#841FDC", "#6B0EBD"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}

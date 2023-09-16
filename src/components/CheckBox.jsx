@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { View, StyleSheet, Image } from "react-native";
 import check from "../../assets/icons/check.png";
+import { Feather } from '@expo/vector-icons';
 
 export default function CheckBox({ onChange }) {
     const [checked, setChecked] = useState(false);
@@ -16,12 +17,10 @@ export default function CheckBox({ onChange }) {
                 height: "80%",
                 borderRadius: 1,
                 backgroundColor: "#318DDD",
+                alignItems: "center",
+                justifyContent: "center",
             }} >
-                <Image source={check} style={{
-                    width: "100%",
-                    height: "100%",
-                    resizeMode: "contain",
-                }} />
+                <Feather name="check" size={14} color="black" />
                 </View>}
         </View>
     );

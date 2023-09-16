@@ -5,40 +5,12 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
-  Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Button } from "../../components/Button";
 import CheckBox from "../../components/CheckBox";
 import CustomTextInput from "../../components/CustomTextInput";
 import { FontAwesome5 } from '@expo/vector-icons';
-import { login } from "../../services/session/login";
-
-const inputsList = [
-  {
-    name: "Nome",
-    placeholder: "Nome",
-    type: "text",
-    icon: <FontAwesome5 name="user" size={20} color="#A0A0A0" />,
-  },
-  {
-    name: "E-mail",
-    placeholder: "E-mail",
-    type: "email",
-    icon: <FontAwesome5 name="envelope" size={20} color="#A0A0A0" />,
-  },
-  {
-    name: "Telefone",
-    placeholder: "Telefone",
-    type: "phone",
-  },
-  {
-    name: "Senha",
-    placeholder: "Senha",
-    type: "password",
-    icon: <FontAwesome5 name="key" size={20} color="#A0A0A0" />,
-  },
-];
 
 export function SignUpPage() {
   const navigation = useNavigation();
@@ -51,9 +23,36 @@ export function SignUpPage() {
     checked: false,
   });
 
-  useEffect(() => {
-    console.log(inputValues);
-  }, [inputValues]);
+const inputsList = [
+  {
+    name: "Nome",
+    placeholder: "Nome",
+    type: "text",
+    icon: <FontAwesome5 name="user" size={20} color="#A0A0A0" />,
+    value: inputValues.name,
+  },
+  {
+    name: "E-mail",
+    placeholder: "E-mail",
+    type: "email",
+    icon: <FontAwesome5 name="envelope" size={20} color="#A0A0A0" />,
+    value: inputValues.email,
+  },
+  {
+    name: "Telefone",
+    placeholder: "xx xxxxx-xxxx",
+    type: "phone",
+    icon: <FontAwesome5 name="phone" size={20} color="#A0A0A0" />,
+    value: inputValues.phoneNumber,
+  },
+  {
+    name: "Senha",
+    placeholder: "Senha",
+    type: "password",
+    icon: <FontAwesome5 name="key" size={20} color="#A0A0A0" />,
+    value: inputValues.password,
+  },
+];
 
   return (
     <SafeAreaView style={styles.container}>
@@ -76,6 +75,7 @@ export function SignUpPage() {
                 placeholder={input.placeholder}
                 customHeight={50}
                 type={input.type}
+                value={input.value}
                 onChange={(text) =>
                   setInputValues({ ...inputValues, [input.name]: text })
                 }
