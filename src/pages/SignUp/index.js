@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -14,45 +14,66 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 export function SignUpPage() {
   const navigation = useNavigation();
-  const [inputValues, setInputValues] = React.useState({
+  const [passwordLevel, setPasswordLevel] = useState(0);
+  const [inputValues, setInputValues] = useState({
     name: "",
     email: "",
     phoneNumber: "",
     password: "",
-    gender: "",
     checked: false,
   });
 
-const inputsList = [
-  {
-    name: "Nome",
-    placeholder: "Nome",
-    type: "text",
-    icon: <FontAwesome5 name="user" size={20} color="#A0A0A0" />,
-    value: inputValues.name,
-  },
-  {
-    name: "E-mail",
-    placeholder: "E-mail",
-    type: "email",
-    icon: <FontAwesome5 name="envelope" size={20} color="#A0A0A0" />,
-    value: inputValues.email,
-  },
-  {
-    name: "Telefone",
-    placeholder: "xx xxxxx-xxxx",
-    type: "phone",
-    icon: <FontAwesome5 name="phone" size={20} color="#A0A0A0" />,
-    value: inputValues.phoneNumber,
-  },
-  {
-    name: "Senha",
-    placeholder: "Senha",
-    type: "password",
-    icon: <FontAwesome5 name="key" size={20} color="#A0A0A0" />,
-    value: inputValues.password,
-  },
-];
+  const inputsList = [
+    {
+      name: "Nome",
+      placeholder: "Nome",
+      type: "text",
+      icon: <FontAwesome5 name="user" size={20} color="#A0A0A0" />,
+      value: 'name',
+    },
+    {
+      name: "E-mail",
+      placeholder: "E-mail",
+      type: "email",
+      icon: <FontAwesome5 name="envelope" size={20} color="#A0A0A0" />,
+      value: 'email',
+    },
+    {
+      name: "Telefone",
+      placeholder: "xx xxxxx-xxxx",
+      type: "phone",
+      icon: <FontAwesome5 name="phone" size={20} color="#A0A0A0" />,
+      value: 'phoneNumber',
+    },
+    {
+      name: "Senha",
+      placeholder: "Senha",
+      type: "password",
+      icon: <FontAwesome5 name="key" size={20} color="#A0A0A0" />,
+      value: 'password',
+    }
+  ];
+
+  function verifyPasswordLevel(password) {
+    let level = 0;
+    if (password.length >= 8) {
+      level++;
+    }
+    
+    if (password.match(/[0-9]/) && password.length >= 8) {
+      level++;
+    }
+
+    if (password.match(/[$&+,:;=?@#|'<>.^*()%!-]/) && password.length >= 8) {
+      level++;
+    }
+
+    setPasswordLevel(level); 
+  }
+
+  useEffect(() => {
+    verifyPasswordLevel(inputValues.password);
+  }, [inputValues.password]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -76,13 +97,33 @@ const inputsList = [
                 customHeight={50}
                 type={input.type}
                 value={input.value}
-                onChange={(text) =>
-                  setInputValues({ ...inputValues, [input.name]: text })
+                onChange={(value) =>
+                  setInputValues({ ...inputValues, [input.value]: value })
                 }
               />
             </View>
           );
         })}
+        <View style={styles.levelPassword}>
+            <View
+              style={{
+                ...styles.containerLevelPassword,
+                backgroundColor: passwordLevel >= 1 ? "#FF2D2D" : "#4B4B4B",
+              }}
+            />
+            <View
+              style={{
+                ...styles.containerLevelPassword,
+                backgroundColor: passwordLevel >= 2 ? "#FFD12D" : "#4B4B4B",
+              }}
+            />
+            <View
+              style={{
+                ...styles.containerLevelPassword,
+                backgroundColor: passwordLevel >= 3 ? "#2DFF2D" : "#4B4B4B",
+              }}
+            />
+        </View>
       </View>
       <View style={styles.footer}>
         <View style={styles.containerTerms}>
@@ -100,7 +141,7 @@ const inputsList = [
           </TouchableOpacity>
         </View>
         <View style={styles.containerButton}>
-          <Button title="Cadastrar" variant="secondary" />
+          <Button title="Cadastrar" variant="secondary"/>
         </View>
       </View>
     </SafeAreaView>
@@ -174,5 +215,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginLeft: 10,
     marginBottom: 5,
+  },
+  levelPassword: {
+    width: "100%",
+    height: 20,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginTop: 10,
+  },
+  containerLevelPassword: {
+    width: 100,
+    height: 10,
+    backgroundColor: "#4B4B4B",
+    borderRadius: 5,
   },
 });

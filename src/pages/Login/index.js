@@ -72,24 +72,26 @@ export default function LoginPage() {
       });
     }
     else {
-        const response = await login(lowerCaseEmail, inputValues.password);
+      const response = await login(lowerCaseEmail, inputValues.password);
 
-        if(response.user !== undefined) {
+      if (response.user !== undefined) {
 
-          const userData = {
-            name: response.user.name,
-            email: response.user.email,
-            token: response.user.token,
-            id: response.user.id,
-          }
+        const userData = {
+          name: response.user.name,
+          email: response.user.email,
+          token: response.user.token,
+          id: response.user.id,
+        }
 
-          dispatch(setLogin(userData));
-          await AsyncStorage.setItem("@user", JSON.stringify(userData));
-        } 
+        dispatch(setLogin(userData));
+        await AsyncStorage.setItem("@user", JSON.stringify(userData));
+      }
     }
-    }
+  }
 
-    
+  async function handleVisitor() {
+    navigation.navigate("Home");
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -137,21 +139,40 @@ export default function LoginPage() {
           <View style={styles.line} />
         </View>
         <View style={styles.cardOptions}>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={handleVisitor}
+            style={styles.buttonOptions}>
+            <View
+              style={{
+                flexDirection: "row",
+                paddingLeft: 10,
+                gap: 10,
+                width: "100%",
+              }}>
+              <View style={{ width: "20%", height: "100%" }}>
+                <FontAwesome5 name="user" size={30} color="#A0A0A0" />
+              </View>
+              <View
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  position: "absolute",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Text style={{ color: "#fff", fontSize: 15 }}>
+                  Entrar como visitate
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
           {optionsLogin.map((item, index) => (
             <TouchableOpacity
               key={index}
               activeOpacity={0.7}
-              style={{
-                width: "100%",
-                height: 50,
-                borderRadius: 5,
-                alignItems: "center",
-                justifyContent: "center",
-                marginTop: 5,
-                backgroundColor: "transparent",
-                borderWidth: 1,
-                borderColor: "#242424",
-              }}
+              style={styles.buttonOptions}
             >
               <View
                 style={{
@@ -159,8 +180,7 @@ export default function LoginPage() {
                   paddingLeft: 10,
                   gap: 10,
                   width: "100%",
-                }}
-              >
+                }}>
                 <View style={{ width: "20%", height: "100%" }}>
                   <Image
                     style={{
@@ -289,5 +309,16 @@ const styles = StyleSheet.create({
     height: "auto",
     alignItems: "center",
     justifyContent: "center",
+  },
+  buttonOptions: {
+    width: "100%",
+    height: 50,
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 5,
+    backgroundColor: "transparent",
+    borderWidth: 1,
+    borderColor: "#242424",
   },
 });

@@ -3,16 +3,13 @@ import { View, StyleSheet, Image } from "react-native";
 import check from "../../assets/icons/check.png";
 import { Feather } from '@expo/vector-icons';
 
-export default function CheckBox({ onChange }) {
-    const [checked, setChecked] = useState(false);
+export default function CheckBox({ onChange, check = false }) {
 
     return (
         <View style={styles.container} 
-            onTouchEnd={() => {
-                setChecked(!checked);
-            }}
+            onTouchStart={() => onChange(!check)}     
         >
-            {checked && <View style={{
+            {check && <View style={{
                 width: "80%",
                 height: "80%",
                 borderRadius: 1,
