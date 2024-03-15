@@ -1,28 +1,36 @@
-import React from "react";
-import { View, StyleSheet, TextInput } from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, Text, TextInput} from "react-native";
 
 
-export function InputNumber({ numbersAmount }) {
+export function InputNumber({ numbersAmount, guessList }) {
+    const [selectedInput, setSelectedInput] = useState(0);
+
     const numbers = [];
     for (let i = 0; i < numbersAmount; i++) {
         numbers.push(i);
     }
 
+    function handleSelectInput(index) {
+        setSelectedInput(index);
+    }
+
     return (
         <View style={styles.container}>
-            {numbers.map((number, index) => (
-                <TextInput
-                    key={index}
+            {numbers.map((index) => (
+                <View key={index}
+                    onTouchStart={() => handleSelectInput(index)}
                     style={{
-                        width: 30,
-                        height: 30,
-                        borderColor: "gray",
-                        borderWidth: 1,
-                        textAlign: "center",
-                    }}
-                    keyboardType="number-pad"
-                    maxLength={1}
-                />
+                        ...styles.input,
+                        borderBottomWidth: selectedInput === index ? 9 : 4,
+                    }}>
+                    <Text style={{
+                        color: "#fff",
+                        fontSize: 30,
+                        
+                    }}>{
+                        guessList[index] ? guessList[index] : ""
+                    }</Text>
+                </View>
             ))}
         </View>
     );
@@ -36,5 +44,15 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-around",
         padding: 10,
+    },
+    input: {
+        width: 70,
+        height: 70,
+        borderColor: "#242424",
+        borderWidth: 4,
+        borderRadius: 10,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
     },
 });
