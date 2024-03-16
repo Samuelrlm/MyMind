@@ -1,8 +1,9 @@
 import React from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { InputNumber } from "./InputNumber";
+import AtemptBefore from "./AttemptBefore";
 
-export default function AttemptsScroll({numbersAmount, guessList}) {
+export default function AttemptsScroll({numbersAmount, guessList, selectedInput, setSelectedInput, attemptsList, randomNumber}) {
     return (
         <View style={styles.container}>
             <ScrollView
@@ -13,7 +14,8 @@ export default function AttemptsScroll({numbersAmount, guessList}) {
                     borderRadius: 10,
                     paddingTop: 10,
                 }}>
-                <InputNumber numbersAmount={numbersAmount} guessList={guessList}/>
+                <AtemptBefore attemptsList={attemptsList} randomNumber={randomNumber}/>
+                <InputNumber numbersAmount={numbersAmount} guessList={guessList} selectedInput ={selectedInput} setSelectedInput={setSelectedInput}/>
             </ScrollView>
         </View>
     );

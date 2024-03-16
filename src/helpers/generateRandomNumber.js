@@ -1,11 +1,11 @@
 export function generateRandomNumber(numberLength) {
-    let number = "";
-    for (let i = 0; i < numberLength; i++) {
-        let n = Math.floor(Math.random() * 10);
-        while (number.includes(n)) {
-            n = Math.floor(Math.random() * 10);
+    //gerar uma lsita de números aleatórios de acordo com o tamanho passado, e sem repetição, com os números em string
+    const numbers = [];
+    while (numbers.length < numberLength) {
+        const number = Math.floor(Math.random() * 10);
+        if (!numbers.includes(number)) {
+            numbers.push(number);
         }
-        number += n;
     }
-    return number;
+    return numbers.map((number) => number.toString());
 }

@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-nati
 import { Button } from "../../../components/Button";
 import CheckBox from "../../../components/CheckBox";
 import { useNavigation } from "@react-navigation/native";
+import { generateRandomNumber } from "../../../helpers/generateRandomNumber";
 
 export default function PlayForm({ selectedMode = "single" }) {
     const navigation = useNavigation();
@@ -33,9 +34,17 @@ export default function PlayForm({ selectedMode = "single" }) {
     }, [gameData.difficulty, gameData.numbersAmount]);
 
 
-    function handleStartGame() {
+    async function handleStartGame() {
+        // Gerar a lista de números aleatórios usando a função generateRandomNumber
+        const randomNumber = await generateRandomNumber(gameData.numbersAmount);
+
+        const dataGame = {
+            ...gameData,
+            randomNumber,
+        };        
+
         if (gameData.mode === "single") {
-            navigation.navigate("SingleGame", { gameData });
+            navigation.navigate("SingleGame", { gameData: dataGame });
         }
 
         if (gameData.mode === "multiplayer") {
@@ -171,7 +180,7 @@ export default function PlayForm({ selectedMode = "single" }) {
                         gameData.mode === "single" ? "Iniciar" : "Criar sala"
                     }
                     variant="primary"
-                    customStyles={{ height: 60, borderRadius: 5}}
+                    customStyles={{ height: 60, borderRadius: 5 }}
                     onPress={handleStartGame}
                 />
             </View>

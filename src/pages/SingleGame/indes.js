@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { PageBase } from "../../components/PageBase";
-import { generateRandomNumber } from "../../helpers/generateRandomNumber";
 import AttemptsScroll from "./components/AttemptsScroll";
 import NumericKeyboard from "./components/NumericKeyboard";
 
@@ -9,14 +8,30 @@ export default function SingleGame({route}) {
     const [guessList, setGuessList] = useState([]);
     const [selectedInput, setSelectedInput] = useState(0);
     const { gameData } = route.params;
-    const randomNumber = generateRandomNumber(gameData.numbersAmount);
+    const [attemptsList, setAttemptsList] = useState([]);
+
+    console.log(gameData);
 
     return (
         <PageBase navBar={false} tabNavigationBar={false} customHeaderStyle={{
             borderBottomWidth: 0,
         }}>
-            <AttemptsScroll numbersAmount={gameData.numbersAmount} guessList={guessList}/>
-            <NumericKeyboard numbersAmount={gameData.numbersAmount} guessList={guessList} setGuessList={setGuessList}/>
+            <AttemptsScroll
+                numbersAmount={gameData.numbersAmount}
+                guessList={guessList}
+                selectedInput={selectedInput}
+                setSelectedInput={setSelectedInput}
+                attemptsList={attemptsList}
+                randomNumber={gameData.randomNumber}
+            />
+            <NumericKeyboard
+                numbersAmount={gameData.numbersAmount}
+                guessList={guessList} setGuessList={setGuessList}
+                selectedInput={selectedInput}
+                setSelectedInput={setSelectedInput}
+                setAttemptsList={setAttemptsList}
+                attemptsList={attemptsList}
+            />
         </PageBase>
     );
 }

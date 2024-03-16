@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { View, StyleSheet, Text, TextInput} from "react-native";
 
 
-export function InputNumber({ numbersAmount, guessList }) {
-    const [selectedInput, setSelectedInput] = useState(0);
+export function InputNumber({ numbersAmount, guessList, selectedInput, setSelectedInput }) {
 
     const numbers = [];
     for (let i = 0; i < numbersAmount; i++) {
@@ -26,7 +25,7 @@ export function InputNumber({ numbersAmount, guessList }) {
                     <Text style={{
                         color: "#fff",
                         fontSize: 30,
-                        
+                        fontWeight: "bold",
                     }}>{
                         guessList[index] ? guessList[index] : ""
                     }</Text>
