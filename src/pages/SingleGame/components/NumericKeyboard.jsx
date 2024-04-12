@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Button } from "../../../components/Button";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function NumericKeyboard({ numbersAmount, guessList, setGuessList, selectedInput, setSelectedInput, setAttemptsList, attemptsList }) {
+export default function NumericKeyboard({ numbersAmount, guessList, setGuessList, selectedInput, setSelectedInput, setAttemptsList, attemptsList, randomNumber}) {
     const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
     function handleSelectInput(number) {
@@ -36,11 +36,23 @@ export default function NumericKeyboard({ numbersAmount, guessList, setGuessList
             return;
         }
 
+        console.log({
+            guessList,
+            randomNumber
+        })
+
+
         const newAttemptsList = [...attemptsList];
         newAttemptsList.push(guessList);
         setAttemptsList(newAttemptsList);
         setGuessList(Array(numbersAmount).fill(null));
         setSelectedInput(0);
+
+        //se a guessList for igual a lista randomNumber
+        if (guessList.join("") === randomNumber.join("")) {
+            alert("Parabéns, você acertou!");
+            return;
+        }
     }
 
     return (

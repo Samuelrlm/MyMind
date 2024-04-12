@@ -10,8 +10,6 @@ export default function SingleGame({route}) {
     const { gameData } = route.params;
     const [attemptsList, setAttemptsList] = useState([]);
 
-    console.log(gameData);
-
     return (
         <PageBase navBar={false} tabNavigationBar={false} customHeaderStyle={{
             borderBottomWidth: 0,
@@ -31,6 +29,7 @@ export default function SingleGame({route}) {
                 setSelectedInput={setSelectedInput}
                 setAttemptsList={setAttemptsList}
                 attemptsList={attemptsList}
+                randomNumber={gameData.randomNumber}
             />
         </PageBase>
     );

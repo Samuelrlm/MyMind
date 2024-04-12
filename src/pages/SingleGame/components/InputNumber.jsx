@@ -13,6 +13,18 @@ export function InputNumber({ numbersAmount, guessList, selectedInput, setSelect
         setSelectedInput(index);
     }
 
+    function sizeInput() {
+        if (numbersAmount === 4) {
+            return 70;
+        }
+        if (numbersAmount === 6) {
+            return 60;
+        }
+        if (numbersAmount === 8) {
+            return 45;
+        }
+    }
+
     return (
         <View style={styles.container}>
             {numbers.map((index) => (
@@ -21,6 +33,8 @@ export function InputNumber({ numbersAmount, guessList, selectedInput, setSelect
                     style={{
                         ...styles.input,
                         borderBottomWidth: selectedInput === index ? 9 : 4,
+                        width: sizeInput(),
+                        height: sizeInput(),
                     }}>
                     <Text style={{
                         color: "#fff",

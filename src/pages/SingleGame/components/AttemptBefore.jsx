@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet} from "react-native";
 
-export default function AtemptBefore({attemptsList, randomNumber}) {
+export default function AtemptBefore({attemptsList, randomNumber, numbersAmount}) {
 
     function varifyNumber(number, index) {
         if (number === randomNumber[index]) {
@@ -25,6 +25,18 @@ export default function AtemptBefore({attemptsList, randomNumber}) {
 
     }
 
+    function sizeInput() {
+        if (numbersAmount === 4) {
+            return 70;
+        }
+        if (numbersAmount === 6) {
+            return 60;
+        }
+        if (numbersAmount === 8) {
+            return 45;
+        }
+    }
+
     return (
         attemptsList.map((attempt, index) => (
             <View key={index} style={styles.container}>
@@ -32,6 +44,8 @@ export default function AtemptBefore({attemptsList, randomNumber}) {
                     <View key={index} style={{
                         ...styles.input,
                         ...varifyNumber(number, index),
+                        width: sizeInput(),
+                        height: sizeInput(),
                     }}>
                         <Text style={styles.text}>{number}</Text>
                     </View>

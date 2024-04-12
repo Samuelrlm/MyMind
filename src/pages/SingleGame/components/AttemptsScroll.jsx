@@ -14,7 +14,7 @@ export default function AttemptsScroll({numbersAmount, guessList, selectedInput,
                     borderRadius: 10,
                     paddingTop: 10,
                 }}>
-                <AtemptBefore attemptsList={attemptsList} randomNumber={randomNumber}/>
+                <AtemptBefore attemptsList={attemptsList} randomNumber={randomNumber} numbersAmount={numbersAmount}/>
                 <InputNumber numbersAmount={numbersAmount} guessList={guessList} selectedInput ={selectedInput} setSelectedInput={setSelectedInput}/>
             </ScrollView>
         </View>
